@@ -1,4 +1,4 @@
-package jmsconnector;
+package jmspublishconnector;
 
 import org.camunda.connect.spi.ConnectorRequest;
 
