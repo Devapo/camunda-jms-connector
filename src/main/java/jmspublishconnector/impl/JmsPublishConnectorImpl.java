@@ -6,10 +6,14 @@ import jmspublishconnector.JmsResponse;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.camunda.connect.impl.AbstractConnector;
 import org.camunda.connect.spi.ConnectorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(JmsPublishConnectorImpl.class);
 
     public JmsPublishConnectorImpl() {
         super(JmsPublishConnector.ID);
@@ -46,8 +50,13 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
 
             producer.send(message);
 
+            LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
+                    PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
+
             connection.close();
         } catch (JMSException e) {
+            LOGGER.warn("Could not sent a message. URL: {} QUEUE: {} MSG: {}",
+                    PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
             e.printStackTrace();
         }
 

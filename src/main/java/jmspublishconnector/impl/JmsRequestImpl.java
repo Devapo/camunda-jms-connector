@@ -28,7 +28,7 @@ public class JmsRequestImpl extends AbstractConnectorRequest<JmsResponse> implem
 
         inputParams.forEach(param -> {
             if(param == null || param.isBlank()){
-                LOGGER.info("Empty input parameter!");
+                LOGGER.warn("Empty input parameter!");
             }
         });
 
