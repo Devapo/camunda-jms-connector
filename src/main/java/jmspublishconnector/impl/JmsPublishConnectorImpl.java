@@ -3,7 +3,6 @@ package jmspublishconnector.impl;
 import jmspublishconnector.JmsPublishConnector;
 import jmspublishconnector.JmsRequest;
 import jmspublishconnector.JmsResponse;
-import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.camunda.connect.impl.AbstractConnector;
 import org.camunda.connect.spi.ConnectorResponse;
@@ -25,10 +24,13 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
     }
 
     public ConnectorResponse execute(JmsRequest jmsRequest) {
-        String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-        String queueName = "test";
+        // Default ActiveMQ can be acquired by "ActiveMQConnection.DEFAULT_BROKER_URL"
+        // and it's value is "failover://tcp://localhost:61616".
+        String PARAM_NAME_URL = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_URL);
+        String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
+        String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
 
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(PARAM_NAME_URL);
         Connection connection = null;
 
         try {
@@ -37,10 +39,10 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            Destination destination = session.createQueue(queueName);
+            Destination destination = session.createQueue(PARAM_NAME_QUEUE);
 
             MessageProducer producer = session.createProducer(destination);
-            TextMessage message = session.createTextMessage("Hi Peter, How are you?");
+            TextMessage message = session.createTextMessage(PARAM_NAME_MESSAGE);
 
             producer.send(message);
 
