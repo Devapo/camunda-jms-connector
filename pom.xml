@@ -45,6 +45,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-junit</artifactId>
+            <!-- replace this for the version you are using -->
+            <version>2.5.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
             <version>7.2.0</version>
