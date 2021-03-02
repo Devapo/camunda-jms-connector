@@ -54,7 +54,11 @@ public class JmsPublishConnectorTest {
     @Test
     public void shouldDiscoverConnector(){
         Connector jmsPublisher = Connectors.getConnector(JmsPublishConnector.ID);
+
         assertThat(jmsPublisher).isNotNull();
+
+        assertThat(jmsPublisher.getId())
+                .isEqualTo(JmsPublishConnector.ID);
     }
 
     @Test
@@ -71,7 +75,11 @@ public class JmsPublishConnectorTest {
 
         QueueViewMBean queueViewMBean = getProxyToQueue("test1");
 
-        assertThat(queueViewMBean.getQueueSize() == 1);
+        assertThat(queueViewMBean.getQueueSize()).isEqualTo(1);
+
+        connector.execute(request);
+
+        assertThat(queueViewMBean.getQueueSize()).isEqualTo(2);
     }
 
     @After
