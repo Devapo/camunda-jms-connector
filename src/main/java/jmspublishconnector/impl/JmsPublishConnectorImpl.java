@@ -13,6 +13,8 @@ import javax.jms.*;
 
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
 
+    protected static JmsPublishConnectorLogger LOG = JmsLogger.JMS_LOGGER;
+
     private final static Logger LOGGER = LoggerFactory.getLogger(JmsPublishConnectorImpl.class);
 
     public JmsPublishConnectorImpl() {
@@ -30,6 +32,7 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
     public ConnectorResponse execute(JmsRequest jmsRequest) {
         // Default ActiveMQ can be acquired by "ActiveMQConnection.DEFAULT_BROKER_URL"
         // and it's value is "failover://tcp://localhost:61616".
+
         String PARAM_NAME_URL = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_URL);
         String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
         String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
@@ -59,6 +62,7 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
                     PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
             e.printStackTrace();
         }
+       if(PARAM_NAME_MESSAGE.equals("err")) throw LOG.jmsUrlRequired();
 
         return new JmsResponseImpl();
     }
