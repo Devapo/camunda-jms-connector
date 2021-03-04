@@ -13,14 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
-import static jmspublishconnector.impl.util.EmptyParamValidator.paramIsEmpty;
 import static jmspublishconnector.impl.util.EmptyParamValidator.validateParams;
-import static jmspublishconnector.impl.util.RequestExceptionHandler.requestException;
 
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
 
     protected static JmsPublishConnectorLogger LOG = JmsLogger.JMS_LOGGER;
-
     private final static Logger LOGGER = LoggerFactory.getLogger(JmsPublishConnectorImpl.class);
 
     public JmsPublishConnectorImpl() {
