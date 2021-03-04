@@ -5,6 +5,7 @@ import jmspublishconnector.JmsRequest;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.broker.jmx.QueueViewMBean;
+import org.camunda.connect.ConnectorRequestException;
 import org.camunda.connect.Connectors;
 import org.camunda.connect.impl.DebugRequestInterceptor;
 import org.camunda.connect.spi.Connector;
@@ -80,6 +81,39 @@ public class JmsPublishConnectorTest {
         connector.execute(request);
 
         assertThat(queueViewMBean.getQueueSize()).isEqualTo(2);
+    }
+
+    @Test(expected = ConnectorRequestException.class)
+    public void exceptionIsThrownUponEmptyMessage(){
+        JmsRequest request = new JmsRequestImpl(connector);
+
+        request.setRequestParameter("url", "tcp://localhost:61610");
+        request.setRequestParameter("queue", "test1");
+        request.setRequestParameter("message", "");
+
+        connector.execute(request);
+    }
+
+    @Test(expected = ConnectorRequestException.class)
+    public void exceptionIsThrownUponEmptyQueue(){
+        JmsRequest request = new JmsRequestImpl(connector);
+
+        request.setRequestParameter("url", "tcp://localhost:61610");
+        request.setRequestParameter("queue", "");
+        request.setRequestParameter("message", "test");
+
+        connector.execute(request);
+    }
+
+    @Test(expected = ConnectorRequestException.class)
+    public void exceptionIsThrownUponEmptyUrl(){
+        JmsRequest request = new JmsRequestImpl(connector);
+
+        request.setRequestParameter("url", "tcp://localhost:61610");
+        request.setRequestParameter("queue", "test1");
+        request.setRequestParameter("message", "");
+
+        connector.execute(request);
     }
 
     @After
