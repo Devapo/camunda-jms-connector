@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
+import static jmspublishconnector.impl.util.EmptyParamValidator.paramIsEmpty;
+import static jmspublishconnector.impl.util.EmptyParamValidator.validateParams;
+import static jmspublishconnector.impl.util.RequestExceptionHandler.requestException;
+
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
 
     protected static JmsPublishConnectorLogger LOG = JmsLogger.JMS_LOGGER;
@@ -32,39 +36,40 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
     }
 
     public ConnectorResponse execute(JmsRequest jmsRequest) {
-        // Default ActiveMQ can be acquired by "ActiveMQConnection.DEFAULT_BROKER_URL"
-        // and it's value is "failover://tcp://localhost:61616".
 
-        String PARAM_NAME_URL = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_URL);
-        String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
-        String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
+        if(validateParams(jmsRequest)){
+            // Default ActiveMQ can be acquired by "ActiveMQConnection.DEFAULT_BROKER_URL"
+            // and it's value is "failover://tcp://localhost:61616".
+            String PARAM_NAME_URL = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_URL);
+            String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
+            String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
 
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(PARAM_NAME_URL);
-        Connection connection = null;
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(PARAM_NAME_URL);
+            Connection connection = null;
 
-        try {
-            connection = connectionFactory.createConnection();
-            connection.start();
+            try {
+                connection = connectionFactory.createConnection();
+                connection.start();
 
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            Destination destination = session.createQueue(PARAM_NAME_QUEUE);
+                Destination destination = session.createQueue(PARAM_NAME_QUEUE);
 
-            MessageProducer producer = session.createProducer(destination);
-            TextMessage message = session.createTextMessage(PARAM_NAME_MESSAGE);
+                MessageProducer producer = session.createProducer(destination);
+                TextMessage message = session.createTextMessage(PARAM_NAME_MESSAGE);
 
-            producer.send(message);
+                producer.send(message);
 
-            LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
-                    PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
+                LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
+                        PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
 
-            connection.close();
-        } catch (JMSException e) {
-            LOGGER.warn("Could not sent a message. URL: {} QUEUE: {} MSG: {}",
-                    PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
-            e.printStackTrace();
+                connection.close();
+            } catch (JMSException e) {
+                LOGGER.warn("Could not sent a message. URL: {} QUEUE: {} MSG: {}",
+                        PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
+                e.printStackTrace();
+            }
         }
-       if(PARAM_NAME_MESSAGE.equals("err")) throw LOG.jmsUrlRequired();
 
         return new JmsResponseImpl();
     }
