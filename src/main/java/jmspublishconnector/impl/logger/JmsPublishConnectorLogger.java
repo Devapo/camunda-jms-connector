@@ -1,4 +1,4 @@
-package jmspublishconnector.impl;
+package jmspublishconnector.impl.logger;
 
 import org.camunda.connect.ConnectorRequestException;
 import org.camunda.connect.impl.ConnectLogger;

@@ -1,4 +1,4 @@
-package jmspublishconnector.impl;
+package jmspublishconnector.impl.logger;
 
 import org.camunda.commons.logging.BaseLogger;
 
