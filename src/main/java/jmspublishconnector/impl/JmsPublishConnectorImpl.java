@@ -8,10 +8,13 @@ import jmspublishconnector.impl.logger.JmsPublishConnectorLogger;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.camunda.connect.impl.AbstractConnector;
 import org.camunda.connect.spi.ConnectorResponse;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+
+import java.io.Serializable;
 
 import static jmspublishconnector.impl.util.EmptyParamValidator.validateParams;
 
@@ -41,6 +44,12 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
             String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
             String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
 
+            JSONObject jsonString = new JSONObject()
+                    .put("id", "1")
+                    .put("from", "me")
+                    .put("to", "you")
+                    .put("payload", "data");
+
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(PARAM_NAME_URL);
             Connection connection = null;
 
@@ -59,6 +68,9 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
 
                 LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
                         PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
+
+                LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
+                        PARAM_NAME_URL, PARAM_NAME_QUEUE, jsonString.toString());
 
                 connection.close();
             } catch (JMSException e) {
