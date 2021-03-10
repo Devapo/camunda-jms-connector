@@ -24,20 +24,23 @@ public class TransactionReceiver {
 
         JSONObject jsonObject = new JSONObject(convertedMessage);
 
-        Object BUSINESS_KEY = jsonObject.opt("bkey");
+        Object PROCESS_INSTANCE_BUSINESS_KEY = jsonObject.opt("bkey");
+        Object NEW_PROCESS_BUSINESS_KEY = jsonObject.opt("new_bkey");
         Object MESSAGE = jsonObject.opt("msg");
-        Object NEW_BUSINESS_KEY = jsonObject.opt("new_bkey");
 
         /* IF INSTANCE ID IS KNOWN TRIGGER A MSG IN ACTIVE INSTANCE
            ELSE TRIGGER A MESSAGE IN AN ENGINE TO START A NEW INSTANCE
                                WITH A GIVEN MSG AS A BUSINESS KEY */
+
         if(MESSAGE != null && !MESSAGE.toString().isEmpty()){
-            if(BUSINESS_KEY != null && !BUSINESS_KEY.toString().isEmpty()){
+            if(PROCESS_INSTANCE_BUSINESS_KEY != null && !PROCESS_INSTANCE_BUSINESS_KEY.toString().isEmpty()){
                 runtimeService.createMessageCorrelation(MESSAGE.toString())
-                        .processInstanceBusinessKey(BUSINESS_KEY.toString())
+                        .processInstanceBusinessKey(PROCESS_INSTANCE_BUSINESS_KEY.toString())
                         .correlate();
+            } else if(NEW_PROCESS_BUSINESS_KEY != null && !NEW_PROCESS_BUSINESS_KEY.toString().isEmpty()){
+                runtimeService.startProcessInstanceByMessage(MESSAGE.toString(), NEW_PROCESS_BUSINESS_KEY.toString());
             } else {
-                runtimeService.startProcessInstanceByMessage(MESSAGE.toString(), NEW_BUSINESS_KEY.toString());
+                System.out.println("BUSINESS KEY IS EMPTY!");
             }
         } else {
             System.out.println("MESSAGE IS EMPTY");

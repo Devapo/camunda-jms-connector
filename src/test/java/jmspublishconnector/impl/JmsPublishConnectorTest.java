@@ -71,7 +71,7 @@ public class JmsPublishConnectorTest {
         request.setRequestParameter("queue", "test1");
         request.setRequestParameter("message", "{'city':'chicago'}");
 
-        connector.execute(request);// "city":"chicago","name":"jon doe","age":"22"
+        connector.execute(request);
         broker.checkQueueSize("test1");
 
         QueueViewMBean queueViewMBean = getProxyToQueue("test1");

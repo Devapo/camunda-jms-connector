@@ -8,13 +8,10 @@ import jmspublishconnector.impl.logger.JmsPublishConnectorLogger;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.camunda.connect.impl.AbstractConnector;
 import org.camunda.connect.spi.ConnectorResponse;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
-
-import java.io.Serializable;
 
 import static jmspublishconnector.impl.util.EmptyParamValidator.validateParams;
 import static jmspublishconnector.impl.util.JsonValidator.isJSONValid;
