@@ -3,8 +3,6 @@ package jmspublishconnector.impl;
 import jmspublishconnector.JmsPublishConnector;
 import jmspublishconnector.JmsRequest;
 import jmspublishconnector.JmsResponse;
-import jmspublishconnector.impl.logger.JmsLogger;
-import jmspublishconnector.impl.logger.JmsPublishConnectorLogger;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.camunda.connect.impl.AbstractConnector;
 import org.camunda.connect.spi.ConnectorResponse;

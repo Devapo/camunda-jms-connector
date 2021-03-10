@@ -2,6 +2,8 @@ package com.example.demo.jms;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.annotation.JmsListener;
@@ -14,6 +16,7 @@ import javax.jms.TextMessage;
 @Component
 @EnableJms
 public class TransactionReceiver {
+    private final static Logger LOGGER = LoggerFactory.getLogger(TransactionReceiver.class);
     @Autowired
     RuntimeService runtimeService;
 
@@ -40,10 +43,11 @@ public class TransactionReceiver {
             } else if(NEW_PROCESS_BUSINESS_KEY != null && !NEW_PROCESS_BUSINESS_KEY.toString().isEmpty()){
                 runtimeService.startProcessInstanceByMessage(MESSAGE.toString(), NEW_PROCESS_BUSINESS_KEY.toString());
             } else {
-                System.out.println("BUSINESS KEY IS EMPTY!");
+                LOGGER.warn("BUSINESS KEY IS EMPTY!");
+                //System.out.println();
             }
         } else {
-            System.out.println("MESSAGE IS EMPTY");
+            LOGGER.warn("MESSAGE IS EMPTY");
         }
     }
 }

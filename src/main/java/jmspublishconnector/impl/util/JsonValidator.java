@@ -10,8 +10,6 @@ import static jmspublishconnector.impl.util.RequestExceptionHandler.requestExcep
 
 public class JsonValidator {
 
-    List<String> jsonKeys = List.of("bkey", "new_bkey", "msg");
-
     public static boolean isJSONValid(String test) {
         try {
             JSONObject jsonObject = new JSONObject(test);
