@@ -44,12 +44,6 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
             String PARAM_NAME_QUEUE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_QUEUE);
             String PARAM_NAME_MESSAGE = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE);
 
-            JSONObject jsonString = new JSONObject()
-                    .put("id", "1")
-                    .put("from", "me")
-                    .put("to", "you")
-                    .put("payload", "data");
-
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(PARAM_NAME_URL);
             Connection connection = null;
 

@@ -20,6 +20,10 @@ public class TransactionReceiver {
     public void receiveMessages(Message message) throws JMSException {
         String convertedMessage =((TextMessage) message).getText();
         System.out.println("Received <" + convertedMessage + ">");
-        runtimeService.createMessageCorrelation(convertedMessage).correlate();
+        runtimeService.createMessageCorrelation(convertedMessage)
+                .processInstanceBusinessKey("key")
+                .correlate();
+
+        //runtimeService.startpr
     }
 }

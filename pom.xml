@@ -50,6 +50,11 @@
             <version>20160810</version>
         </dependency>
         <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+        <dependency>
             <groupId>org.camunda.connect</groupId>
             <artifactId>camunda-connect-core</artifactId>
             <version>1.0.0</version>
