@@ -19,6 +19,9 @@ public class RequestExceptionHandler {
 
             case JmsRequest.PARAM_NAME_URL:
                 throw LOG.jmsUrlRequired();
+
+            case "JSON_ERROR":
+                throw LOG.jmsWrongJsonMessageFormat();
         }
     }
 }

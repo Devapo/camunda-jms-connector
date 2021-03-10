@@ -16,4 +16,8 @@ public class JmsPublishConnectorLogger extends ConnectLogger {
     public ConnectorRequestException jmsMessageRequired(){
         return new ConnectorRequestException(exceptionMessage("003", "JMS message is required"));
     }
+
+    public ConnectorRequestException jmsWrongJsonMessageFormat(){
+        return new ConnectorRequestException(exceptionMessage("004", "Wrong message JSON format! Should contain msg and bkey or msg and new_bkey."));
+    }
 }

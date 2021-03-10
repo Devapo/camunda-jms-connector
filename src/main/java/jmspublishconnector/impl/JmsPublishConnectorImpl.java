@@ -18,7 +18,6 @@ import static jmspublishconnector.impl.util.JsonValidator.isJSONValid;
 
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
 
-    protected static JmsPublishConnectorLogger LOG = JmsLogger.JMS_LOGGER;
     private final static Logger LOGGER = LoggerFactory.getLogger(JmsPublishConnectorImpl.class);
 
     public JmsPublishConnectorImpl() {
