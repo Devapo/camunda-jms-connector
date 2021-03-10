@@ -69,7 +69,7 @@ public class JmsPublishConnectorTest {
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
-        request.setRequestParameter("message", "{'city':'chicago'}");
+        request.setRequestParameter("message", "{'bkey':'business_key','msg':'payload_data'}");
 
         connector.execute(request);
         broker.checkQueueSize("test1");
