@@ -37,8 +37,6 @@ public class TransactionReceiver {
                         .processInstanceBusinessKey(BUSINESS_KEY.toString())
                         .correlate();
             } else {
-                System.out.println("BUSINESS KEY EMPTY");
-                System.out.println(NEW_BUSINESS_KEY.toString());
                 runtimeService.startProcessInstanceByMessage(MESSAGE.toString(), NEW_BUSINESS_KEY.toString());
             }
         } else {
