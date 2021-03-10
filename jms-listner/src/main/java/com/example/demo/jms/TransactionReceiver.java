@@ -23,7 +23,8 @@ public class TransactionReceiver {
     @JmsListener(destination = "test")
     public void receiveMessages(Message message) throws JMSException {
         String convertedMessage =((TextMessage) message).getText();
-        System.out.println("Received <" + convertedMessage + ">");
+
+        LOGGER.info("Message successfully received. MSG: " + convertedMessage);
 
         JSONObject jsonObject = new JSONObject(convertedMessage);
 
