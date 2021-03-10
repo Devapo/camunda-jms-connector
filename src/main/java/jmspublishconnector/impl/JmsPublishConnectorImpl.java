@@ -17,6 +17,7 @@ import javax.jms.*;
 import java.io.Serializable;
 
 import static jmspublishconnector.impl.util.EmptyParamValidator.validateParams;
+import static jmspublishconnector.impl.util.JsonValidator.isJSONValid;
 
 public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsResponse> implements JmsPublishConnector {
 
@@ -37,7 +38,7 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
 
     public ConnectorResponse execute(JmsRequest jmsRequest) {
 
-        if(validateParams(jmsRequest)){
+        if(validateParams(jmsRequest) && isJSONValid(jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_MESSAGE))){
             // Default ActiveMQ can be acquired by "ActiveMQConnection.DEFAULT_BROKER_URL"
             // and it's value is "failover://tcp://localhost:61616".
             String PARAM_NAME_URL = jmsRequest.getRequestParameter(JmsRequest.PARAM_NAME_URL);
@@ -62,9 +63,6 @@ public class JmsPublishConnectorImpl extends AbstractConnector<JmsRequest, JmsRe
 
                 LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
                         PARAM_NAME_URL, PARAM_NAME_QUEUE, PARAM_NAME_MESSAGE);
-
-                LOGGER.info("Message successfully sent. URL: {} QUEUE: {} MSG: {}",
-                        PARAM_NAME_URL, PARAM_NAME_QUEUE, jsonString.toString());
 
                 connection.close();
             } catch (JMSException e) {
