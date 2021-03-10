@@ -116,6 +116,17 @@ public class JmsPublishConnectorTest {
         connector.execute(request);
     }
 
+    @Test(expected = ConnectorRequestException.class)
+    public void exceptionIsThrownUponJsonWithWrongKeys(){
+        JmsRequest request = new JmsRequestImpl(connector);
+
+        request.setRequestParameter("url", "tcp://localhost:61610");
+        request.setRequestParameter("queue", "test1");
+        request.setRequestParameter("message", "{'wrong':'json', 'keys':'test'}");
+
+        connector.execute(request);
+    }
+
     @After
     public void tearDownAMQ() throws Exception {
         broker.stop();
