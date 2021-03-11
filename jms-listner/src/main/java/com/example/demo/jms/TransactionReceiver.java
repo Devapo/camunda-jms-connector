@@ -33,7 +33,7 @@ public class TransactionReceiver {
     }
 
     @JmsListener(destination = "test")
-    public void receiveMessages(Message message) throws JMSException {
+    public void receiveMessagesAndTriggerInstance(Message message) throws JMSException {
         String convertedMessage =((TextMessage) message).getText();
 
         LOGGER.info("Message successfully received. MSG: " + convertedMessage);
@@ -46,6 +46,8 @@ public class TransactionReceiver {
         if(paramIsNotEmpty(INSTANCE_ID.toString()) && paramIsNotEmpty(PAYLOAD.toString()))
         {
             runtimeService.createMessageCorrelation(PAYLOAD.toString())
+                    .setVariable("ID", this.INSTANCE_ID.replace("'", ""))
+                    .setVariable("PAYLOAD", this.PAYLOAD.replace("'", ""))
                     .processInstanceBusinessKey(INSTANCE_ID.toString())
                     .correlate();
         } else {
