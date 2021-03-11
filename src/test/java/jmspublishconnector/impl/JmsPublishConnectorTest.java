@@ -122,7 +122,7 @@ public class JmsPublishConnectorTest {
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
-        request.setRequestParameter("message", "{'wrong':'json', 'keys':'test'}");
+        request.setRequestParameter("message", "{'wrong':'json', 'keys':'test', 'hello':'world'}");
 
         connector.execute(request);
     }

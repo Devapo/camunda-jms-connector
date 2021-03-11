@@ -12,7 +12,7 @@ public class JsonValidator {
         try {
             JSONObject jsonObject = new JSONObject(test);
             // Check if input json cotains all neccessary keys
-            if (!(jsonObject.has("msg") && (jsonObject.has("bkey") || jsonObject.has("new_bkey")))){
+            if (jsonObject.length() != 2){
                 requestException("JSON_ERROR");
                 return false;
             }

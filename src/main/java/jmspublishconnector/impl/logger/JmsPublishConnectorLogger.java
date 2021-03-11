@@ -18,6 +18,6 @@ public class JmsPublishConnectorLogger extends ConnectLogger {
     }
 
     public ConnectorRequestException jmsWrongJsonMessageFormat(){
-        return new ConnectorRequestException(exceptionMessage("004", "Wrong message JSON format! Should contain msg and bkey or msg and new_bkey."));
+        return new ConnectorRequestException(exceptionMessage("004", "Wrong message JSON format! Should contain two keys."));
     }
 }
