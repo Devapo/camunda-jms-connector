@@ -46,8 +46,8 @@ public class TransactionReceiver {
         if(paramIsNotEmpty(INSTANCE_ID.toString()) && paramIsNotEmpty(PAYLOAD.toString()))
         {
             runtimeService.createMessageCorrelation(PAYLOAD.toString())
-                    .setVariable("ID", this.INSTANCE_ID.replace("'", ""))
-                    .setVariable("PAYLOAD", this.PAYLOAD.replace("'", ""))
+                    .setVariable("ID", INSTANCE_ID.toString())
+                    .setVariable("PAYLOAD", PAYLOAD.toString())
                     .processInstanceBusinessKey(INSTANCE_ID.toString())
                     .correlate();
         } else {
