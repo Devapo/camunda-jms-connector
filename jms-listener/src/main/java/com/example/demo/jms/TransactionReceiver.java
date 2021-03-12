@@ -28,20 +28,26 @@ public class TransactionReceiver {
     @Value("${json.payload}")
     private String PAYLOAD;
 
+    @Value("${queue}")
+    private String QUEUE;
+
     public static boolean paramIsNotEmpty(String param){
         return (param != null && !param.isEmpty());
     }
 
     @JmsListener(destination = "test")
     public void receiveMessagesAndTriggerInstance(Message message) throws JMSException {
+
+        LOGGER.info("QUEUE: " + this.QUEUE);
+
         String convertedMessage =((TextMessage) message).getText();
 
         LOGGER.info("Message successfully received. MSG: " + convertedMessage);
 
         JSONObject jsonObject = new JSONObject(convertedMessage);
 
-        Object INSTANCE_ID = jsonObject.opt(this.INSTANCE_ID.replace("'", ""));
-        Object PAYLOAD = jsonObject.opt(this.PAYLOAD.replace("'",""));
+        Object INSTANCE_ID = jsonObject.opt(this.INSTANCE_ID);
+        Object PAYLOAD = jsonObject.opt(this.PAYLOAD);
 
         if(paramIsNotEmpty(INSTANCE_ID.toString()) && paramIsNotEmpty(PAYLOAD.toString()))
         {
