@@ -8,6 +8,12 @@
     <artifactId>camunda-jms-connector</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <artifactId>parent-project</artifactId>
+        <groupId>org.parent</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <build>
         <plugins>
             <plugin>
