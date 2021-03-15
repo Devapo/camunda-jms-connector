@@ -171,7 +171,12 @@
             <artifactId>demo</artifactId>
             <version>0.0.2-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../jms-listener/target/demo-0.0.2-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/../jms-listener/target/demo-0.0.2-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
 
