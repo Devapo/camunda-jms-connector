@@ -17,8 +17,8 @@
     <properties>
         <camunda.spring-boot.version>3.4.0</camunda.spring-boot.version>
         <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <version.assertj>3.12.2</version.assertj>
         <version.bpm-assert>4.0.0</version.bpm-assert>
         <version.mockito>2.24.5</version.mockito>
@@ -159,7 +159,20 @@
             <version>${version.mockito}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>camunda-jms-connector</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../jms-publisher/target/camunda-jms-connector-1.0-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>demo</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../jms-listener/target/demo-0.0.2-SNAPSHOT.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
