@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/camunda-jms-connector.iml" filepath="$PROJECT_DIR$/camunda-jms-connector.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jms-listener/camunda-jms-listener.iml" filepath="$PROJECT_DIR$/jms-listener/camunda-jms-listener.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jms-publisher/camunda-jms-publisher.iml" filepath="$PROJECT_DIR$/jms-publisher/camunda-jms-publisher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-project/camunda-jms-test-project.iml" filepath="$PROJECT_DIR$/test-project/camunda-jms-test-project.iml" />
+    </modules>
+  </component>
+</project>

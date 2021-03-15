@@ -4,14 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>parent-project</artifactId>
-        <groupId>org.parent</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
-    <groupId>org.example</groupId>
-    <artifactId>camunda-starter-sample</artifactId>
+    <groupId>pl.devapo.camunda</groupId>
+    <artifactId>camunda-jms-test-project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -44,10 +38,6 @@
             <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
             <version>${camunda.spring-boot.version}</version>
         </dependency>
-
-
-
-        <!--        in memory database-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -57,10 +47,6 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.3</version>
         </dependency>
-
-
-        <!--        //for accessing camunda api's-->
-        <!--        //for connectors-->
         <dependency>
             <groupId>org.camunda.bpm.springboot</groupId>
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
@@ -82,8 +68,6 @@
             <artifactId>camunda-engine-plugin-connect</artifactId>
             <version>7.12.0</version>
         </dependency>
-
-        <!--Spin-->
         <dependency>
             <groupId>org.camunda.spin</groupId>
             <artifactId>camunda-spin-core</artifactId>
@@ -104,28 +88,36 @@
             <artifactId>camunda-engine-plugin-spin</artifactId>
             <version>7.12.0</version>
         </dependency>
-
-        <!--        lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
-
-        <!--for email-->
         <dependency>
             <groupId>org.camunda.bpm.extension</groupId>
             <artifactId>camunda-bpm-mail-core</artifactId>
             <version>1.2.0</version>
         </dependency>
-
-
-        <!--        email from simpleEmail-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-email</artifactId>
             <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.devapo.camunda</groupId>
+            <artifactId>camunda-jms-publisher</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.devapo.camunda</groupId>
+            <artifactId>camunda-jms-listener</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0</version>
         </dependency>
 
         <!--        for testing purpose-->
@@ -158,25 +150,6 @@
             <artifactId>mockito-core</artifactId>
             <version>${version.mockito}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>camunda-jms-connector</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../jms-publisher/target/camunda-jms-connector-1.0-SNAPSHOT-jar-with-dependencies.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>demo</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../jms-listener/target/demo-0.0.2-SNAPSHOT-jar-with-dependencies.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>javax.jms-api</artifactId>
-            <version>2.0</version>
         </dependency>
     </dependencies>
 

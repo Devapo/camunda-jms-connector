@@ -2,11 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>parent-project</artifactId>
-		<groupId>org.parent</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
+
+	<groupId>pl.devapo.camunda</groupId>
+	<artifactId>camunda-jms-listener</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+	<name>jms-listener</name>
+	<description>Jms listener project</description>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -41,14 +43,10 @@
 			</plugin>
 		</plugins>
 	</build>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<name>jms-listner</name>
-	<description>Jms listener.</description>
 	<properties>
 		<java.version>8</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -77,12 +75,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<version>2.4.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>javax.jms</groupId>
 			<artifactId>javax.jms-api</artifactId>
 			<version>2.0</version>
@@ -102,6 +94,14 @@
 			<groupId>org.camunda.bpm</groupId>
 			<artifactId>camunda-engine</artifactId>
 			<version>7.12.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>2.4.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
