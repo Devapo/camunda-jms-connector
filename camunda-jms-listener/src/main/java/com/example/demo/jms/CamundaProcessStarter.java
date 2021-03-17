@@ -2,6 +2,7 @@ package com.example.demo.jms;
 
 import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.RuntimeService;
+import org.springframework.context.annotation.Bean;
 
 @RequiredArgsConstructor
 public class CamundaProcessStarter {

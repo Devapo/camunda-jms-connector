@@ -3,7 +3,9 @@ package com.example.demo.jms;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.broker.jmx.QueueViewMBean;
+import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.jms.JMSException;
 import javax.management.MalformedObjectNameException;
@@ -46,15 +48,15 @@ class TransactionReceiverTest {
 
     @Test
     public void shouldDiscoverConnector(){
-        Connector jmsPublisher = Connectors.getConnector(JmsPublishConnector.ID);
+       /* Connector jmsPublisher = Connectors.getConnector(JmsPublishConnector.ID);
 
         assertThat(jmsPublisher).isNotNull();
 
         assertThat(jmsPublisher.getId())
-                .isEqualTo(JmsPublishConnector.ID);
+                .isEqualTo(JmsPublishConnector.ID);*/
     }
 
-    @Test
+   /* @Test
     public void connectorSendsMessageToJms() throws IOException, MalformedObjectNameException, JMSException {
 
         JmsRequest request = new JmsRequestImpl(connector);
@@ -74,9 +76,9 @@ class TransactionReceiverTest {
         connector.execute(request);
 
         assertThat(queueViewMBean.getQueueSize()).isEqualTo(2);
-    }
+    }*/
 
-    @Test(expected = ConnectorRequestException.class)
+   /* @Test(expected = ConnectorRequestException.class)
     public void exceptionIsThrownUponEmptyMessage(){
         JmsRequest request = new JmsRequestImpl(connector);
 
@@ -118,7 +120,7 @@ class TransactionReceiverTest {
         request.setRequestParameter("message", "{'wrong':'json', 'keys':'test', 'hello':'world'}");
 
         connector.execute(request);
-    }
+    }*/
 
     @After
     public void tearDownAMQ() throws Exception {
