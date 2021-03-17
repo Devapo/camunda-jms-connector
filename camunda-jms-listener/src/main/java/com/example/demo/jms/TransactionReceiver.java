@@ -28,6 +28,12 @@ public class TransactionReceiver {
     @Value("${json.payload}")
     private String PAYLOAD;
 
+    @Autowired
+    private JmsMsgDeserializer myDeserializer;
+
+    @Autowired
+    private CamundaProcessStarter camundaProcessStarter;
+
     public static boolean paramIsNotEmpty(String param){
         return (param != null && !param.isEmpty());
     }
@@ -35,22 +41,12 @@ public class TransactionReceiver {
     @JmsListener(destination = "test")
     public void receiveMessagesAndTriggerInstance(Message message) throws JMSException {
 
-        String convertedMessage =((TextMessage) message).getText();
+        DeserializedMessage msg = myDeserializer.deserialize(message);
+        LOGGER.info("Message successfully received. MSG: " + msg.toString());
 
-        LOGGER.info("Message successfully received. MSG: " + convertedMessage);
-
-        JSONObject jsonObject = new JSONObject(convertedMessage);
-
-        Object INSTANCE_ID = jsonObject.opt(this.INSTANCE_ID);
-        Object PAYLOAD = jsonObject.opt(this.PAYLOAD);
-
-        if(paramIsNotEmpty(INSTANCE_ID.toString()) && paramIsNotEmpty(PAYLOAD.toString()))
+        if(paramIsNotEmpty(msg.getInstanceId()) && paramIsNotEmpty(msg.getPayload()))
         {
-            runtimeService.createMessageCorrelation(PAYLOAD.toString())
-                    .setVariable("ID", INSTANCE_ID.toString())
-                    .setVariable("PAYLOAD", PAYLOAD.toString())
-                    .processInstanceBusinessKey(INSTANCE_ID.toString())
-                    .correlate();
+            camundaProcessStarter.startProcessByMessage(msg);
         } else {
             LOGGER.warn("EMPTY JSON PARAMETER");
         }
