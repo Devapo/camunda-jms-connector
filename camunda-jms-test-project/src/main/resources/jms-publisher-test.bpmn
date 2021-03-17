@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_11eok0t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
-  <bpmn:process id="jmsPublish" name="TEST_INPUT" isExecutable="true">
+  <bpmn:process id="jmsPublish" name="JMS Send" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1vuz9k2</bpmn:outgoing>
     </bpmn:startEvent>
@@ -11,7 +11,7 @@
           <camunda:inputOutput>
             <camunda:inputParameter name="url">failover://tcp://localhost:61616</camunda:inputParameter>
             <camunda:inputParameter name="queue">test</camunda:inputParameter>
-            <camunda:inputParameter name="message">Hello world!</camunda:inputParameter>
+            <camunda:inputParameter name="message">{'bkey':'first','msg':'continue'}</camunda:inputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>jms-publish-connector</camunda:connectorId>
         </camunda:connector>

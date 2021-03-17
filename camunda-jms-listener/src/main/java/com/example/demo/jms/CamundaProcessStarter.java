@@ -9,10 +9,10 @@ public class CamundaProcessStarter {
     RuntimeService runtimeService;
 
     public void startProcessByMessage(DeserializedMessage msg) {
-        /*runtimeService.createMessageCorrelation(msg.getPayload())
+        runtimeService.createMessageCorrelation(msg.getPayload())
                 .setVariable("ID", msg.getInstanceId())
                 .setVariable("PAYLOAD", msg.getPayload())
                 .processInstanceBusinessKey(msg.getInstanceId())
-                .correlate();*/
+                .correlate();
     }
 }
