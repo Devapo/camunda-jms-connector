@@ -23,7 +23,7 @@ public class TransactionReceiver {
     private String PAYLOAD;
 
     @Autowired
-    private JmsMsgDeserializer myDeserializer;
+    private JmsMsgDeserializer jmsMsgDeserializer;
 
     @Autowired
     private CamundaProcessStarter camundaProcessStarter;
@@ -34,15 +34,14 @@ public class TransactionReceiver {
 
     @JmsListener(destination = "test")
     public void receiveMessagesAndTriggerInstance(Message message) throws JMSException {
-        DeserializedMessage msg = myDeserializer.deserialize(message);
-        LOGGER.info("Message successfully received. MSG: " + msg);
+        DeserializedMessage deserializedMessage = jmsMsgDeserializer.deserialize(message);
+        LOGGER.info("Message successfully received. MSG: " + deserializedMessage);
 
-        if(paramIsNotEmpty(msg.getInstanceId()) && paramIsNotEmpty(msg.getPayload()))
+        if(paramIsNotEmpty(deserializedMessage.getInstanceId()) && paramIsNotEmpty(deserializedMessage.getPayload()))
         {
-            camundaProcessStarter.startProcessByMessage(msg);
+            camundaProcessStarter.startProcessByMessage(deserializedMessage);
         } else {
             LOGGER.warn("EMPTY JSON PARAMETER");
         }
     }
 }
-//https://docs.camunda.org/javadoc/camunda-bpm-platform/7.3/org/camunda/bpm/engine/RuntimeService.html
