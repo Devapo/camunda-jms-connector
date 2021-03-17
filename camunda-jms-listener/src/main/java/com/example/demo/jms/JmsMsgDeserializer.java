@@ -21,6 +21,7 @@ public class JmsMsgDeserializer {
 
         Object INSTANCE_ID = jsonObject.opt(this.INSTANCE_ID);
         Object PAYLOAD = jsonObject.opt(this.PAYLOAD);
+
         return new DeserializedMessage(INSTANCE_ID.toString(), PAYLOAD.toString());
     }
 }

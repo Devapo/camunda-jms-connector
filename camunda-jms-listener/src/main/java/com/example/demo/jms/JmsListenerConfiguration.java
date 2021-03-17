@@ -3,7 +3,6 @@ package com.example.demo.jms;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class JmsListenerConfiguration {
@@ -17,5 +16,10 @@ public class JmsListenerConfiguration {
     @Bean
     JmsMsgDeserializer jmsMsgDeserializer() {
         return new JmsMsgDeserializer(INSTANCE_ID, PAYLOAD);
+    }
+
+    @Bean
+    CamundaProcessStarter camundaProcessStarter(){
+        return new CamundaProcessStarter();
     }
 }

@@ -1,19 +1,18 @@
 package com.example.demo.jms;
 
-import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.RuntimeService;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@RequiredArgsConstructor
 public class CamundaProcessStarter {
 
-    private final RuntimeService runtimeService;
+    @Autowired
+    RuntimeService runtimeService;
 
     public void startProcessByMessage(DeserializedMessage msg) {
-        runtimeService.createMessageCorrelation(msg.getPayload())
+        /*runtimeService.createMessageCorrelation(msg.getPayload())
                 .setVariable("ID", msg.getInstanceId())
                 .setVariable("PAYLOAD", msg.getPayload())
                 .processInstanceBusinessKey(msg.getInstanceId())
-                .correlate();
+                .correlate();*/
     }
 }
