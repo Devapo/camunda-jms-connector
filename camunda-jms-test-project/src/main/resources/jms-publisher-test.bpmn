@@ -11,7 +11,7 @@
           <camunda:inputOutput>
             <camunda:inputParameter name="url">failover://tcp://localhost:61616</camunda:inputParameter>
             <camunda:inputParameter name="queue">test</camunda:inputParameter>
-            <camunda:inputParameter name="message">{'bkey':'first','msg':'continue'}</camunda:inputParameter>
+            <camunda:inputParameter name="message">{'bkey':'first','msg':'start'}</camunda:inputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>jms-publish-connector</camunda:connectorId>
         </camunda:connector>
