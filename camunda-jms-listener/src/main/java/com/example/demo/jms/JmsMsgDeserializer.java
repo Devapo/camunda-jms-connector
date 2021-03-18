@@ -14,7 +14,6 @@ public class JmsMsgDeserializer {
     private final String PAYLOAD;
 
     public DeserializedMessage deserialize(Message message) throws JMSException {
-
         String convertedMessage =((TextMessage) message).getText();
 
         JSONObject jsonObject = new JSONObject(convertedMessage);
