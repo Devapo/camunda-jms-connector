@@ -63,7 +63,7 @@ json.payload=msg
 ```  
 
 2.  **Customize publisher**
-	* Select `service-task` in cammunda modeler block and customize it according to your needs. Example customization below will enqueue on `test` queue that is run on an `failover://tcp://localhost:61616` address a message that is a json - `{'bkey':'first','msg':'start'}`. Mind the fact that those values reflect on how you customized your listener.   
+	* Select `service-task` in cammunda modeler block and customize it according to your needs. Example customization below will enqueue on `test` queue that is run on an `failover://tcp://localhost:61616` address a message that is a json - `{'bkey':'first','msg':'start'}`. Mind the fact that those values reflect on how you customized your listener. JMS Connector's Id is **jms-publish-connector**. It is very important as it points out which connector you would like to use.  
 ![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/d5897526a72425cad0ce1752ead0a023055bab4d/resources/IMAGES/publisher.PNG)
 
 3.  **Build the project**    
@@ -73,11 +73,11 @@ json.payload=msg
 
 ## Example usage
 
-* Start local ActiveMQ JMS. Be default it will run on `tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=1` URL but remember to change it in *application.properties* of your project if you don't go for the default value.
+* Start local ActiveMQ JMS. By default it will run on `tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=1` URL but remember to change it in *application.properties* of your project if you don't go for the default value.
 
 * Open the `camunda-jms-test-project` with your favourite IDE.
 
-* Start the project. Make sure that you included publisher's and listener's jar in the project.
+* Start the project. You can run it as a Spring Boot application with a main class. Make sure that you included publisher's and listener's jar in the project.
 
 * Open web browser and login with `u:u` credentials at `http://localhost:8085/`
 
@@ -85,9 +85,9 @@ json.payload=msg
 
 * In our project there is a process called `JMS Listen`. It is started by a *Message Event* that is waitng for `start` message by listenening to the local queue. As in previous step we enqueued such message, the Camunda Engine will start an instance of a `JMS Listen` process.
 
-* At this point it is clear how the JMS connector works, it enqueued a message on a queue that is listened by the engine. Whenever engine receives a message it will start an instance of a new particular process. 
+* At this point it is clear how the JMS connector works, it enqueued a message on a queue that is listened by the engine. Whenever engine receives a message it will trigger an instance of a new particular process or it will send it to an existing instance, regarding if the engine finds a process instance with an id given in JSON . 
 
-* Now that the instance of `JMS Listen` is active it awaits for `continue` message. Let's send one! Customize in Camunda Modeler the JSON of `JMS Send` process with `{'bkey':'first','msg':'start'}` and deploy it to the engine. Now if you run `JMS Send` again you will notice that the instance of `JMS Listen` is gone, as the listener received `continue` message from engine that dequeued the message from the queue.
+* Now that the instance of `JMS Listen` is active it awaits for `continue` message. Let's send one! Customize in Camunda Modeler the JSON of `JMS Send` process with `{'bkey':'first','msg':'continue'}` and deploy it to the engine. Now if you run `JMS Send` again you will notice that the instance of `JMS Listen` is gone, as the listener received `continue` message from engine that dequeued the message from the queue.
 
 ## Roadmap
 
