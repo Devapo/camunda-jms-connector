@@ -6,7 +6,9 @@
 
     <groupId>pl.devapo.camunda</groupId>
     <artifactId>camunda-jms-publisher</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <name>camunda-jms-publisher</name>
+    <description>Jms publisher project</description>
 
     <build>
         <plugins>
