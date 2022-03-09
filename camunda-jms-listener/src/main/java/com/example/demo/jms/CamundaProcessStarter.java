@@ -1,12 +1,14 @@
 package com.example.demo.jms;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class CamundaProcessStarter {
 
-    @Autowired
-    RuntimeService runtimeService;
+    private final RuntimeService runtimeService;
+
+    public CamundaProcessStarter(RuntimeService runtimeService) {
+        this.runtimeService = runtimeService;
+    }
 
     public void startProcessByMessage(DeserializedMessage msg) {
         runtimeService.createMessageCorrelation(msg.getPayload())

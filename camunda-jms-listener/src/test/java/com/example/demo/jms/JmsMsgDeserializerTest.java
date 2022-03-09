@@ -1,19 +1,18 @@
 package com.example.demo.jms;
 
-import org.apache.activemq.command.ActiveMQTextMessage;
-import org.json.JSONException;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.jms.JMSException;
+import org.apache.activemq.command.ActiveMQTextMessage;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class JmsMsgDeserializerTest {
+class JmsMsgDeserializerTest {
 
     @Test
-    public void jmsMsgDeserializerTest() throws JMSException {
+    void jmsMsgDeserializerTest() throws JMSException {
         JmsMsgDeserializer jmsMsgDeserializer = new JmsMsgDeserializer("id", "payload");
-
         DeserializedMessage deserializedMessage = new DeserializedMessage("id", "payload");
 
         ActiveMQTextMessage message = new ActiveMQTextMessage();
@@ -22,11 +21,10 @@ public class JmsMsgDeserializerTest {
         assertThat(jmsMsgDeserializer.deserialize(message)).hasToString(deserializedMessage.toString());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void jmsMsgDeserializerThrowsExceptionUponEmptyParam() throws JMSException {
+    @Test
+    void jmsMsgDeserializerReturnNullInstanceIdWhenIncorrectlyFormatted() throws JMSException {
         JmsMsgDeserializer jmsMsgDeserializer = new JmsMsgDeserializer("id", "payload");
-
-        DeserializedMessage deserializedMessage = new DeserializedMessage("id", "payload");
+        DeserializedMessage deserializedMessage = new DeserializedMessage(null, "payload");
 
         ActiveMQTextMessage message = new ActiveMQTextMessage();
         message.setText("{'':'','payload':'payload'}");
@@ -34,11 +32,10 @@ public class JmsMsgDeserializerTest {
         assertThat(jmsMsgDeserializer.deserialize(message)).hasToString(deserializedMessage.toString());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void jmsMsgDeserializerThrowsExceptionUponWrongParam() throws JMSException {
+    @Test
+    void jmsMsgDeserializerThrowsExceptionUponWrongParam() throws JMSException {
         JmsMsgDeserializer jmsMsgDeserializer = new JmsMsgDeserializer("id", "payload");
-
-        DeserializedMessage deserializedMessage = new DeserializedMessage("id", "payload");
+        DeserializedMessage deserializedMessage = new DeserializedMessage("wrong", "payload");
 
         ActiveMQTextMessage message = new ActiveMQTextMessage();
         message.setText("{'wrong':'id','params':'payload'}");
@@ -46,15 +43,13 @@ public class JmsMsgDeserializerTest {
         assertThat(jmsMsgDeserializer.deserialize(message)).hasToString(deserializedMessage.toString());
     }
 
-    @Test(expected = JSONException.class)
-    public void jmsMsgDeserializerThrowsExceptionUponWrongJsonFormat() throws JMSException {
+    @Test
+    void jmsMsgDeserializerThrowsExceptionUponWrongJsonFormat() throws JMSException {
         JmsMsgDeserializer jmsMsgDeserializer = new JmsMsgDeserializer("id", "payload");
-
-        DeserializedMessage deserializedMessage = new DeserializedMessage("id", "payload");
 
         ActiveMQTextMessage message = new ActiveMQTextMessage();
         message.setText("'wrong':'json','format':'payload'}");
 
-        assertThat(jmsMsgDeserializer.deserialize(message)).hasToString(deserializedMessage.toString());
+        assertThrows(JSONException.class, () -> jmsMsgDeserializer.deserialize(message));
     }
 }

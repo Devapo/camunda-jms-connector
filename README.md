@@ -1,18 +1,13 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
+[![LinkedIn][linkedin-shield]](https://www.linkedin.com/company/devapopl)
 
 ![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/be613f14158caab39b30f458235f3eac1d3b61b1/resources/IMAGES/devapo.PNG "Devapo")
 
 ## About The Project
 
-Camunda JMS Connector is a Cammunda Connect plugin extension that allows to enqueue and dequeue messages on Java Message Service in any project that uses Cammunda Engine with BPMN processes.
+Camunda JMS Connector is a Camunda Connect plugin extension that allows to enqueue and dequeue messages on Java Message Service in any project that uses Cammunda Engine with BPMN processes.
 It is fully customizable and by using it in a project, a user can model a BPMN process where it is possible to enqueue any messages on a particular instance of JMS. JMS Connector also features
-receiveing messages from  the desirable queue and upon receiving the payload it triggers a message in the Camunda Engine, which ultimately can start a new instance of a process or continue an 
+receiving messages from  the desirable queue and upon receiving the payload it triggers a message in the Camunda Engine, which ultimately can start a new instance of a process or continue an 
 existing one depending on how the connector and a processes are customized.
 
 ![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/9ea400c94a2923cb0f75fb760e278a57da64d201/resources/IMAGES/Camunda%20Flow.png "Cammunda flow")
@@ -32,9 +27,9 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-* []() clone Cammunda JMS Connector repository
+* []() clone Camunda JMS Connector repository
 * []() get your favourite IDE
-* []() maven
+* []() Maven
 * []() ActiveMQ - a local instance in Docker should do
 * []() Camunda Modeler
 
@@ -43,22 +38,22 @@ To get a local copy up and running follow these simple steps.
 1. **Customize listener**  
 	* To choose the queue that you want to listen get into `TransactionReceiver.java` and change the value of **destination** in `@JmsListener` annotation.
 	* To choose the instance of a JMS that you would like to listen get into your project and customize necessary variables in `application.properites`.
-```
-// Example application.properites
+```properties
+# Example application.properites
 
-//activemq credentials
+# activemq credentials
 spring.activemq.user=admin
 spring.activemq.password=admin
 
-//activemq url
+# activemq url
 spring.activemq.broker-url=tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=1
 
-//json keys that you would like your listener should look for
+# json keys that you would like your listener should look for
 
-//key for an id of an instance of a process 
+# key for an id of an instance of a process 
 json.instanceid=bkey
 
-//key for a message that you would like to send
+# key for a message that you would like to send
 json.payload=msg
 ```  
 
@@ -100,29 +95,10 @@ Any contributions you make are **greatly appreciated**.
 
 ## License
 
-See `LICENSE` for more information.
+Software is licensed under [MIT License](LICENSE).	
 
 ## Contact
 
-[@devapo](https://devapo.pl/)
+[@devapo](https://devapo.io/)
 
 Project Link: [https://github.com/](https://github.com/)
-
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/dbader/readme-template
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/github_username

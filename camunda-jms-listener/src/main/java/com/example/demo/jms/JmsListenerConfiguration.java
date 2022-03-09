@@ -1,25 +1,30 @@
 package com.example.demo.jms;
 
+import org.camunda.bpm.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.annotation.EnableJms;
 
 @Configuration
+@EnableJms
 public class JmsListenerConfiguration {
 
-    @Value("${json.instanceid}")
-    private String INSTANCE_ID;
+    private final String instanceId;
+    private final String payload;
 
-    @Value("${json.payload}")
-    private String PAYLOAD;
-
-    @Bean
-    JmsMsgDeserializer jmsMsgDeserializer() {
-        return new JmsMsgDeserializer(INSTANCE_ID, PAYLOAD);
+    public JmsListenerConfiguration(
+            @Value("${json.instanceid}") String instanceId,
+            @Value("${json.payload}") String payload) {
+        this.instanceId = instanceId;
+        this.payload = payload;
     }
 
     @Bean
-    CamundaProcessStarter camundaProcessStarter(){
-        return new CamundaProcessStarter();
+    TransactionReceiver transactionReceiver(RuntimeService runtimeService) {
+        return new TransactionReceiver(
+                new JmsMsgDeserializer(instanceId, payload),
+                new CamundaProcessStarter(runtimeService)
+        );
     }
 }

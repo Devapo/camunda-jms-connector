@@ -2,39 +2,40 @@ package com.example.demo.jms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-@Component
-@EnableJms
 public class TransactionReceiver {
-    private final static Logger LOGGER = LoggerFactory.getLogger(TransactionReceiver.class);
 
-    @Autowired
-    private JmsMsgDeserializer jmsMsgDeserializer;
+    private final static Logger log = LoggerFactory.getLogger(TransactionReceiver.class);
 
-    @Autowired
-    private CamundaProcessStarter camundaProcessStarter;
+    private final JmsMsgDeserializer jmsMsgDeserializer;
+    private final CamundaProcessStarter camundaProcessStarter;
 
-    public static boolean paramIsNotEmpty(String param){
-        return (param != null && !param.isEmpty());
+    public TransactionReceiver(JmsMsgDeserializer jmsMsgDeserializer, CamundaProcessStarter camundaProcessStarter) {
+        this.jmsMsgDeserializer = jmsMsgDeserializer;
+        this.camundaProcessStarter = camundaProcessStarter;
     }
 
     @JmsListener(destination = "test")
     public void receiveMessagesAndTriggerInstance(Message message) throws JMSException {
         DeserializedMessage deserializedMessage = jmsMsgDeserializer.deserialize(message);
-        LOGGER.info("Message successfully received. MSG: " + deserializedMessage);
+        log.info("Message received: {}", deserializedMessage);
 
-        if(paramIsNotEmpty(deserializedMessage.getInstanceId()) && paramIsNotEmpty(deserializedMessage.getPayload()))
-        {
+        if (isMessageValid(deserializedMessage)) {
             camundaProcessStarter.startProcessByMessage(deserializedMessage);
         } else {
-            LOGGER.warn("EMPTY JSON PARAMETER");
+            log.warn("Empty JSON parameter. Message will not be processed.");
         }
+    }
+
+    private boolean isMessageValid(DeserializedMessage deserializedMessage) {
+        return isNotEmpty(deserializedMessage.getInstanceId()) && isNotEmpty(deserializedMessage.getPayload());
+    }
+
+    private static boolean isNotEmpty(String param) {
+        return (param != null && !param.isEmpty());
     }
 }

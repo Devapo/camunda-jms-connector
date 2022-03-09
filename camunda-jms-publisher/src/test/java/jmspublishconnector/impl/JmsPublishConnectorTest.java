@@ -1,7 +1,5 @@
 package jmspublishconnector.impl;
 
-import jmspublishconnector.JmsPublishConnector;
-import jmspublishconnector.JmsRequest;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.activemq.broker.jmx.QueueViewMBean;
@@ -9,34 +7,36 @@ import org.camunda.connect.ConnectorRequestException;
 import org.camunda.connect.Connectors;
 import org.camunda.connect.impl.DebugRequestInterceptor;
 import org.camunda.connect.spi.Connector;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 
 import javax.jms.JMSException;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import java.io.IOException;
 import java.net.URI;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JmsPublishConnectorTest {
+class JmsPublishConnectorTest {
 
-    BrokerService broker;
+    private static BrokerService broker;
+    private static JmsPublishConnector connector;
+    private static DebugRequestInterceptor interceptor;
 
-    protected JmsPublishConnector connector;
-    protected DebugRequestInterceptor interceptor;
-
-    @Before
-    public void createConnector(){
-        connector = new JmsPublishConnectorImpl();
+    @BeforeAll
+    static void createConnector() {
+        connector = new JmsPublishConnector();
         interceptor = new DebugRequestInterceptor(false);
         connector.addRequestInterceptor(interceptor);
     }
 
-    @Before
-    public void setupAMQ() throws Exception{
+    @BeforeEach
+    void setupAMQ() throws Exception {
         broker = new BrokerService();
         TransportConnector connector = new TransportConnector();
         connector.setUri(new URI("tcp://localhost:61610"));
@@ -45,15 +45,15 @@ public class JmsPublishConnectorTest {
         broker.start();
     }
 
-    public QueueViewMBean getProxyToQueue(String name) throws MalformedObjectNameException, JMSException{
-        ObjectName queueViewMBeanName = new ObjectName("org.apache.activemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName="+name);
+    QueueViewMBean getProxyToQueue(String name) throws MalformedObjectNameException, JMSException {
+        ObjectName queueViewMBeanName = new ObjectName("org.apache.activemq:type=Broker,brokerName=localhost,destinationType=Queue,destinationName=" + name);
         QueueViewMBean proxy = (QueueViewMBean) broker.getManagementContext()
                 .newProxyInstance(queueViewMBeanName, QueueViewMBean.class, true);
         return proxy;
     }
 
     @Test
-    public void shouldDiscoverConnector(){
+    void shouldDiscoverConnector() {
         Connector jmsPublisher = Connectors.getConnector(JmsPublishConnector.ID);
 
         assertThat(jmsPublisher).isNotNull();
@@ -63,9 +63,9 @@ public class JmsPublishConnectorTest {
     }
 
     @Test
-    public void connectorSendsMessageToJms() throws IOException, MalformedObjectNameException, JMSException {
+    void connectorSendsMessageToJms() throws IOException, MalformedObjectNameException, JMSException {
 
-        JmsRequest request = new JmsRequestImpl(connector);
+        JmsRequest request = new JmsRequest(connector);
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
@@ -83,51 +83,51 @@ public class JmsPublishConnectorTest {
         assertThat(queueViewMBean.getQueueSize()).isEqualTo(2);
     }
 
-    @Test(expected = ConnectorRequestException.class)
-    public void exceptionIsThrownUponEmptyMessage(){
-        JmsRequest request = new JmsRequestImpl(connector);
+    @Test
+    void exceptionIsThrownUponEmptyMessage() {
+        JmsRequest request = new JmsRequest(connector);
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
         request.setRequestParameter("message", "");
 
-        connector.execute(request);
+        assertThrows(ConnectorRequestException.class, () -> connector.execute(request));
     }
 
-    @Test(expected = ConnectorRequestException.class)
-    public void exceptionIsThrownUponEmptyQueue(){
-        JmsRequest request = new JmsRequestImpl(connector);
+    @Test
+    void exceptionIsThrownUponEmptyQueue() {
+        JmsRequest request = new JmsRequest(connector);
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "");
         request.setRequestParameter("message", "test");
 
-        connector.execute(request);
+        assertThrows(ConnectorRequestException.class, () -> connector.execute(request));
     }
 
-    @Test(expected = ConnectorRequestException.class)
-    public void exceptionIsThrownUponEmptyUrl(){
-        JmsRequest request = new JmsRequestImpl(connector);
+    @Test
+    void exceptionIsThrownUponEmptyUrl() {
+        JmsRequest request = new JmsRequest(connector);
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
         request.setRequestParameter("message", "");
 
-        connector.execute(request);
+        assertThrows(ConnectorRequestException.class, () -> connector.execute(request));
     }
 
-    @Test(expected = ConnectorRequestException.class)
-    public void exceptionIsThrownUponJsonWithWrongKeys(){
-        JmsRequest request = new JmsRequestImpl(connector);
+    @Test
+    void exceptionIsThrownUponJsonWithWrongKeys() {
+        JmsRequest request = new JmsRequest(connector);
 
         request.setRequestParameter("url", "tcp://localhost:61610");
         request.setRequestParameter("queue", "test1");
         request.setRequestParameter("message", "{'wrong':'json', 'keys':'test', 'hello':'world'}");
 
-        connector.execute(request);
+        assertThrows(ConnectorRequestException.class, () -> connector.execute(request));
     }
 
-    @After
+    @AfterEach
     public void tearDownAMQ() throws Exception {
         broker.stop();
     }

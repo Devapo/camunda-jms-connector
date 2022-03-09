@@ -1,14 +1,17 @@
 package jmspublishconnector.impl;
 
-import jmspublishconnector.JmsPublishConnector;
 import org.camunda.connect.spi.ConnectorProvider;
 
-public class JmsPublishConnectorProviderImpl implements ConnectorProvider {
+public class JmsPublishConnectorProvider implements ConnectorProvider {
+
+    @Override
     public String getConnectorId() {
         return JmsPublishConnector.ID;
     }
 
+    @Override
     public JmsPublishConnector createConnectorInstance() {
-        return new JmsPublishConnectorImpl(JmsPublishConnector.ID);
+        return new JmsPublishConnector(JmsPublishConnector.ID);
     }
+
 }
