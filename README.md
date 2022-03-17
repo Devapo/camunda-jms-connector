@@ -1,7 +1,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/company/devapopl)
 
-![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/be613f14158caab39b30f458235f3eac1d3b61b1/resources/IMAGES/devapo.PNG "Devapo")
+![Alt text](resources/IMAGES/devapo.PNG "Devapo")
 
 ## About The Project
 
@@ -10,7 +10,7 @@ It is fully customizable and by using it in a project, a user can model a BPMN p
 receiving messages from  the desirable queue and upon receiving the payload it triggers a message in the Camunda Engine, which ultimately can start a new instance of a process or continue an 
 existing one depending on how the connector and a processes are customized.
 
-![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/9ea400c94a2923cb0f75fb760e278a57da64d201/resources/IMAGES/Camunda%20Flow.png "Cammunda flow")
+![Alt text](resources/IMAGES/Camunda%20Flow.png "Cammunda flow")
 
 ### Built With
 
@@ -59,7 +59,7 @@ json.payload=msg
 
 2.  **Customize publisher**
 	* Select `service-task` in cammunda modeler block and customize it according to your needs. Example customization below will enqueue on `test` queue that is run on an `failover://tcp://localhost:61616` address a message that is a json - `{'bkey':'first','msg':'start'}`. Mind the fact that those values reflect on how you customized your listener. JMS Connector's Id is **jms-publish-connector**. It is very important as it points out which connector you would like to use.  
-![Alt text](https://bitbucket.org/devapo/camunda-jms-connector/raw/d5897526a72425cad0ce1752ead0a023055bab4d/resources/IMAGES/publisher.PNG)
+![Alt text](resources/IMAGES/publisher.PNG)
 
 3.  **Build the project**    
     * run `mvn package` in respository directory  
@@ -84,18 +84,13 @@ json.payload=msg
 
 * Now that the instance of `JMS Listen` is active it awaits for `continue` message. Let's send one! Customize in Camunda Modeler the JSON of `JMS Send` process with `{'bkey':'first','msg':'continue'}` and deploy it to the engine. Now if you run `JMS Send` again you will notice that the instance of `JMS Listen` is gone, as the listener received `continue` message from engine that dequeued the message from the queue.
 
-## Roadmap
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
-
-
 ## Contributing
 
 Any contributions you make are **greatly appreciated**.
 
 ## License
 
-Software is licensed under [MIT License](LICENSE).	
+Software is licensed under [MIT License](LICENSE).
 
 ## Contact
 
