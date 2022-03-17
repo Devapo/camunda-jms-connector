@@ -64,26 +64,8 @@ json.payload=msg
 3.  **Build the project**    
     * run `mvn package` in respository directory  
 4.  **Use output JAR's as external library**  
-   In `\target` directory of listener and publisher you will find both fat jars and light jars. Use one of them regarding your project preferences. In test project those jars are included already in **pom.xml**.
-
-## Example usage
-
-* Start local ActiveMQ JMS. By default it will run on `tcp://localhost:61616?jms.redeliveryPolicy.maximumRedeliveries=1` URL but remember to change it in *application.properties* of your project if you don't go for the default value.
-
-* Open the `camunda-jms-test-project` with your favourite IDE.
-
-* Start the project. You can run it as a Spring Boot application with a main class. Make sure that you included publisher's and listener's jar in the project.
-
-* Open web browser and login with `u:u` credentials at `http://localhost:8085/`
-
-* In *Tasklist* start an instance of a process `JMS Send`. This will enqueue a message that is a json - `{'bkey':'first','msg':'start'}` on a `test` queue that is run on an `failover://tcp://localhost:61616` address.
-
-* In our project there is a process called `JMS Listen`. It is started by a *Message Event* that is waitng for `start` message by listenening to the local queue. As in previous step we enqueued such message, the Camunda Engine will start an instance of a `JMS Listen` process.
-
-* At this point it is clear how the JMS connector works, it enqueued a message on a queue that is listened by the engine. Whenever engine receives a message it will trigger an instance of a new particular process or it will send it to an existing instance, regarding if the engine finds a process instance with an id given in JSON . 
-
-* Now that the instance of `JMS Listen` is active it awaits for `continue` message. Let's send one! Customize in Camunda Modeler the JSON of `JMS Send` process with `{'bkey':'first','msg':'continue'}` and deploy it to the engine. Now if you run `JMS Send` again you will notice that the instance of `JMS Listen` is gone, as the listener received `continue` message from engine that dequeued the message from the queue.
-
+   In `\target` directory of listener and publisher you will find both fat jars and light jars. Use one of them regarding your project preferences.
+	
 ## Contributing
 
 Any contributions you make are **greatly appreciated**.

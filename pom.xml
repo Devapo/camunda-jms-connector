@@ -13,7 +13,6 @@
     <modules>
         <module>camunda-jms-listener</module>
         <module>camunda-jms-publisher</module>
-        <module>camunda-jms-test-project</module>
     </modules>
 
 </project>
