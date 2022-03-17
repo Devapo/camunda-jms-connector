@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_17s43ti" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="jmsListen" name="JMS Listen" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1p4g8tm</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1gglcqc" messageRef="Message_0qxp2xj" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1p4g8tm" sourceRef="StartEvent_1" targetRef="Event_1e3g0gk" />
+    <bpmn:intermediateCatchEvent id="Event_1e3g0gk">
+      <bpmn:incoming>Flow_1p4g8tm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h5chj4</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1imadbi" messageRef="Message_1rsy4z7" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_1ygbrvg">
+      <bpmn:incoming>Flow_1aw8hm4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0h5chj4" sourceRef="Event_1e3g0gk" targetRef="Activity_1p00754" />
+    <bpmn:sequenceFlow id="Flow_1aw8hm4" sourceRef="Activity_1p00754" targetRef="Event_1ygbrvg" />
+    <bpmn:serviceTask id="Activity_1p00754">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="message">{'bkey':'','msg':'${PAYLOAD}'}</camunda:inputParameter>
+            <camunda:inputParameter name="queue">test2</camunda:inputParameter>
+            <camunda:inputParameter name="url">failover://tcp://localhost:61616</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>jms-publish-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0h5chj4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aw8hm4</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_0qxp2xj" name="start" />
+  <bpmn:message id="Message_1rsy4z7" name="continue" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="jmsListen">
+      <bpmndi:BPMNEdge id="Flow_1aw8hm4_di" bpmnElement="Flow_1aw8hm4">
+        <di:waypoint x="650" y="110" />
+        <di:waypoint x="752" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h5chj4_di" bpmnElement="Flow_0h5chj4">
+        <di:waypoint x="365" y="110" />
+        <di:waypoint x="550" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p4g8tm_di" bpmnElement="Flow_1p4g8tm">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="332" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1iqz244_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00tcv6f_di" bpmnElement="Event_1e3g0gk">
+        <dc:Bounds x="332" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ygbrvg_di" bpmnElement="Event_1ygbrvg">
+        <dc:Bounds x="752" y="92" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wt2pex_di" bpmnElement="Activity_1p00754">
+        <dc:Bounds x="550" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

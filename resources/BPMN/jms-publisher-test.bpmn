@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_11eok0t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="jmsPublish" name="JMS Send" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1vuz9k2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1vuz9k2" sourceRef="StartEvent_1" targetRef="jms-publisher" />
+    <bpmn:serviceTask id="jms-publisher" name="Send basic info to local ActiveMq JMS">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">failover://tcp://localhost:61616</camunda:inputParameter>
+            <camunda:inputParameter name="queue">test</camunda:inputParameter>
+            <camunda:inputParameter name="message">{'bkey':'first','msg':'start'}</camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>jms-publish-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vuz9k2</bpmn:incoming>
+      <bpmn:outgoing>Flow_11li1or</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1k1ral6">
+      <bpmn:incoming>Flow_11li1or</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_11li1or" sourceRef="jms-publisher" targetRef="Event_1k1ral6" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="jmsPublish">
+      <bpmndi:BPMNEdge id="Flow_11li1or_di" bpmnElement="Flow_11li1or">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="392" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vuz9k2_di" bpmnElement="Flow_1vuz9k2">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16ivg2q_di" bpmnElement="jms-publisher">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1k1ral6_di" bpmnElement="Event_1k1ral6">
+        <dc:Bounds x="392" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
