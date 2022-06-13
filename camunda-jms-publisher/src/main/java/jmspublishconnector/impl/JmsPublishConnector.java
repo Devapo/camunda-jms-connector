@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+import java.lang.IllegalStateException;
 
 public class JmsPublishConnector extends AbstractConnector<JmsRequest, JmsResponse> implements Connector<JmsRequest> {
 
@@ -44,7 +45,9 @@ public class JmsPublishConnector extends AbstractConnector<JmsRequest, JmsRespon
         String message = jmsRequest.getMessage();
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 
-        try (Connection connection = connectionFactory.createConnection()) {
+        Connection connection = null;
+        try {
+            connection = connectionFactory.createConnection();
             connection.start();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue(queue);
@@ -54,9 +57,21 @@ public class JmsPublishConnector extends AbstractConnector<JmsRequest, JmsRespon
             producer.send(session.createTextMessage(message));
         } catch (JMSException e) {
             log.warn("Could not sent a message", e);
+        } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
         }
 
         return new JmsResponse();
+    }
+
+    private void closeConnection(Connection connection) {
+        try {
+            connection.close();
+        } catch (JMSException e) {
+            throw new IllegalStateException("Could not close connection", e);
+        }
     }
 
     private void validateRequest(JmsRequest jmsRequest) {
