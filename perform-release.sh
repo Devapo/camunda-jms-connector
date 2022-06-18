@@ -19,10 +19,9 @@ git tag "${TAG_NAME}"
 # Perform release
 mvn clean deploy -DskipTests
 git push
-git push origin "${TAG_NAME}"
 
 # Prepare development iteration
-mvn versions:use-next-snapshots
+mvn versions:set -DnextSnapshot
 git add -A
 git commit -m "Prepare for next development iteration"
 git push
