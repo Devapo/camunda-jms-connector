@@ -6,7 +6,7 @@
 
 	<groupId>io.devapo.camunda</groupId>
 	<artifactId>jms-connector-parent</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Devapo Camunda JMS connector parent project</description>
