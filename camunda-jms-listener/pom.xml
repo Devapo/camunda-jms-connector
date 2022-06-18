@@ -10,8 +10,10 @@
 	</parent>
 
 	<artifactId>camunda-jms-listener</artifactId>
+
 	<name>camunda-jms-listener</name>
-	<description>Jms listener project</description>
+	<description>Devapo Camunda JMS listener project</description>
+	<url>https://github.com/Devapo/camunda-jms-connector</url>
 
 	<properties>
 		<maven.deploy.skip>false</maven.deploy.skip>

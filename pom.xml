@@ -106,4 +106,26 @@
         </plugins>
     </build>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Devapo</name>
+            <email>devapo@devapo.io</email>
+            <organization>Devapo</organization>
+            <organizationUrl>https://devapo.io/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/Devapo/camunda-jms-connector.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Devapo/camunda-jms-connector.git</developerConnection>
+        <url>https://github.com/Devapo/camunda-jms-connector</url>
+    </scm>
+
 </project>
