@@ -19,6 +19,7 @@ git tag "${TAG_NAME}"
 # Perform release
 mvn clean deploy -DskipTests
 git push
+git push origin "${TAG_NAME}"
 
 # Prepare development iteration
 mvn versions:set -DnextSnapshot
