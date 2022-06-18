@@ -15,8 +15,10 @@
 	</properties>
 
 	<artifactId>camunda-jms-publisher</artifactId>
-	<name>camunda-jms-publisher</name>
-	<description>Jms publisher project</description>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Devapo Camunda JMS publisher project</description>
+	<url>https://github.com/Devapo/camunda-jms-connector</url>
 
 	<dependencies>
 		<dependency>
@@ -57,4 +59,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
