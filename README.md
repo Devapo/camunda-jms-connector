@@ -22,6 +22,24 @@ existing one depending on how the connector and a processes are customized.
 
 To get a local copy up and running follow these simple steps.
 
+An alternative, more straightforward way is to use the connector as maven dependency. For this purpose just include publisher and listener just like below.
+
+```
+<!-- https://mvnrepository.com/artifact/io.devapo.camunda/camunda-jms-publisher -->
+<dependency>
+    <groupId>io.devapo.camunda</groupId>
+    <artifactId>camunda-jms-publisher</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.devapo.camunda/camunda-jms-listener -->
+<dependency>
+    <groupId>io.devapo.camunda</groupId>
+    <artifactId>camunda-jms-listener</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ### Prerequisites
 
 * []() clone Camunda JMS Connector repository
